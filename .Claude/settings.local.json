@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/ayaobama/Documents/AnthonySalesOps/Codebase/**)",
+      "Bash(python example_pipeline.py:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

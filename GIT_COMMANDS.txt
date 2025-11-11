@@ -1,0 +1,232 @@
+# Git Commands for IC_Load Repository
+# Review these commands before executing
+
+# ============================================
+# STEP 1: Initialize Git Repository (if not already done)
+# ============================================
+
+# Navigate to IC_Load directory
+cd c:/Users/ayaobama/Documents/AnthonySalesOps/Codebase/IC_Load
+
+# Initialize git (skip if already initialized)
+# git init
+
+# ============================================
+# STEP 2: Add Files to Staging
+# ============================================
+
+# Add all documentation files
+git add README.md
+git add QUICK_START.md
+git add SKILLS_SUMMARY.md
+git add ARCHITECTURE.md
+git add .gitignore
+
+# Add Claude configuration
+git add .Claude/Claude.md
+
+# Add all skill directories and their contents
+git add sql-schema-discovery/
+git add dataclass-generator/
+git add sql-connection-manager/
+git add case-extractor/
+git add dataframe-dataclass-converter/
+git add duckdb-transformer/
+git add pipeline-stage-mapper/
+git add computed-columns-calculator/
+
+# Add template directories
+git add template-skill/
+git add skill-creator/
+git add data-discovery/
+
+# Add properties file (placeholder)
+git add properties.py
+
+# ============================================
+# STEP 3: Check What Will Be Committed
+# ============================================
+
+# Review staged files
+git status
+
+# See what will be committed
+git diff --cached
+
+# ============================================
+# STEP 4: Commit Changes
+# ============================================
+
+git commit -m "Initial commit: IC_Load modular data extraction pipeline
+
+- 12 modular skills for SQL Server → DataFrame → Dataclass extraction
+- Infrastructure skills: schema-discovery, dataclass-generator, connection-manager
+- Entity extraction: case-extractor (template for others)
+- Transformation skills: dataframe-converter, duckdb-transformer
+- Business logic: pipeline-stage-mapper, computed-columns-calculator
+- Complete documentation: README, QUICK_START, SKILLS_SUMMARY, ARCHITECTURE
+- Case entity with 21 properties (+ denormalized Company/Person fields)
+- Contact entity with 7 properties
+- Communication entity with 2+ properties
+- Extensible architecture for adding new entities
+
+🤖 Generated with Claude Code
+Co-Authored-By: Claude <noreply@anthropic.com>"
+
+# ============================================
+# STEP 5: Create GitHub Repository (via browser or gh CLI)
+# ============================================
+
+# Option A: Using GitHub CLI (if installed)
+# gh repo create IC_Load --public --description "Modular SQL Server to Python dataclass extraction pipeline with Bronze/Silver/Gold layers"
+
+# Option B: Create manually via GitHub website
+# 1. Go to https://github.com/new
+# 2. Repository name: IC_Load
+# 3. Description: Modular SQL Server to Python dataclass extraction pipeline
+# 4. Public or Private: Choose based on preference
+# 5. Do NOT initialize with README (we already have one)
+# 6. Click "Create repository"
+
+# ============================================
+# STEP 6: Add GitHub Remote
+# ============================================
+
+# Replace YOUR_USERNAME with your GitHub username
+git remote add origin https://github.com/YOUR_USERNAME/IC_Load.git
+
+# Verify remote
+git remote -v
+
+# ============================================
+# STEP 7: Push to GitHub
+# ============================================
+
+# Push to main branch
+git push -u origin main
+
+# ============================================
+# ALTERNATIVE: If main branch doesn't exist, use master
+# ============================================
+
+# Check current branch name
+git branch
+
+# If branch is "master" instead of "main":
+# git push -u origin master
+
+# Or rename master to main:
+# git branch -M main
+# git push -u origin main
+
+# ============================================
+# STEP 8: Verify on GitHub
+# ============================================
+
+# Open in browser:
+# https://github.com/YOUR_USERNAME/IC_Load
+
+# ============================================
+# SUMMARY OF WHAT WILL BE COMMITTED
+# ============================================
+
+# Skill Directories (8):
+# - sql-schema-discovery/
+# - dataclass-generator/
+# - sql-connection-manager/
+# - case-extractor/
+# - dataframe-dataclass-converter/
+# - duckdb-transformer/
+# - pipeline-stage-mapper/
+# - computed-columns-calculator/
+
+# Documentation Files (4):
+# - README.md
+# - QUICK_START.md
+# - SKILLS_SUMMARY.md
+# - ARCHITECTURE.md
+
+# Configuration Files (2):
+# - .gitignore
+# - .Claude/Claude.md
+
+# Template Directories (3):
+# - template-skill/
+# - skill-creator/
+# - data-discovery/
+
+# Other Files:
+# - properties.py
+
+# Total: ~50+ files across all skills and documentation
+
+# ============================================
+# EXCLUDED BY .gitignore
+# ============================================
+
+# - Bronze/Silver/Gold CSV files
+# - .xlsx, .xls files
+# - Database files (.mdf, .ldf, .bak)
+# - Python cache (__pycache__)
+# - IDE settings (.vscode, .idea)
+# - Temporary files
+# - Connection strings/secrets
+
+# ============================================
+# QUICK COMMAND SEQUENCE (COPY/PASTE)
+# ============================================
+
+# After reviewing, you can run these commands in sequence:
+
+cd c:/Users/ayaobama/Documents/AnthonySalesOps/Codebase/IC_Load
+git add README.md QUICK_START.md SKILLS_SUMMARY.md ARCHITECTURE.md .gitignore .Claude/ sql-schema-discovery/ dataclass-generator/ sql-connection-manager/ case-extractor/ dataframe-dataclass-converter/ duckdb-transformer/ pipeline-stage-mapper/ computed-columns-calculator/ template-skill/ skill-creator/ data-discovery/ properties.py
+git status
+git commit -m "Initial commit: IC_Load modular data extraction pipeline
+
+- 12 modular skills for SQL Server → DataFrame → Dataclass extraction
+- Infrastructure skills: schema-discovery, dataclass-generator, connection-manager
+- Entity extraction: case-extractor (template for others)
+- Transformation skills: dataframe-converter, duckdb-transformer
+- Business logic: pipeline-stage-mapper, computed-columns-calculator
+- Complete documentation: README, QUICK_START, SKILLS_SUMMARY, ARCHITECTURE
+- Case entity with 21 properties (+ denormalized Company/Person fields)
+- Contact entity with 7 properties
+- Communication entity with 2+ properties
+- Extensible architecture for adding new entities
+
+🤖 Generated with Claude Code
+Co-Authored-By: Claude <noreply@anthropic.com>"
+git remote add origin https://github.com/YOUR_USERNAME/IC_Load.git
+git push -u origin main
+
+# ============================================
+# NOTES
+# ============================================
+
+# 1. Replace YOUR_USERNAME with your actual GitHub username
+# 2. Create the GitHub repository first (Step 5)
+# 3. Review git status output before committing
+# 4. Make sure you're in the IC_Load directory
+# 5. If you get authentication errors, set up GitHub credentials:
+#    - Personal Access Token: https://github.com/settings/tokens
+#    - Or use SSH: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+
+# ============================================
+# TROUBLESHOOTING
+# ============================================
+
+# If "git push" fails with authentication error:
+# Option 1: Use Personal Access Token
+# git remote set-url origin https://YOUR_TOKEN@github.com/YOUR_USERNAME/IC_Load.git
+
+# Option 2: Use SSH (recommended)
+# git remote set-url origin git@github.com:YOUR_USERNAME/IC_Load.git
+
+# If branch name is wrong:
+# git branch -M main
+
+# If you need to undo the last commit (before push):
+# git reset --soft HEAD~1
+
+# If you need to see commit history:
+# git log --oneline
