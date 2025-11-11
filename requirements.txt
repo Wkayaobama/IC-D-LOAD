@@ -1,0 +1,48 @@
+# IC-D-LOAD Requirements
+# CRM Reconciliation Pipeline Dependencies
+
+# ============================================================================
+# PostgreSQL & Database
+# ============================================================================
+psycopg2-binary>=2.9.9      # PostgreSQL adapter for Python
+pyodbc>=5.0.1               # SQL Server ODBC driver (legacy CRM)
+
+# ============================================================================
+# Data Processing
+# ============================================================================
+pandas>=2.1.0               # Data manipulation and analysis
+numpy>=1.24.0               # Numerical computing (pandas dependency)
+
+# ============================================================================
+# Logging & Monitoring
+# ============================================================================
+loguru>=0.7.2               # Beautiful logging with colors
+
+# ============================================================================
+# HTTP & API
+# ============================================================================
+requests>=2.31.0            # HTTP library for workflow API
+
+# ============================================================================
+# Data Transformation (Optional but Recommended)
+# ============================================================================
+duckdb>=0.9.0               # In-memory SQL database for transformations
+
+# ============================================================================
+# Data Validation (Optional)
+# ============================================================================
+pydantic>=2.4.0             # Data validation using Python type hints
+
+# ============================================================================
+# Development & Testing (Optional)
+# ============================================================================
+pytest>=7.4.0               # Testing framework
+pytest-asyncio>=0.21.0      # Async test support
+black>=23.10.0              # Code formatter
+flake8>=6.1.0               # Linting
+mypy>=1.6.0                 # Static type checking
+
+# ============================================================================
+# Utilities
+# ============================================================================
+python-dotenv>=1.0.0        # Environment variable management

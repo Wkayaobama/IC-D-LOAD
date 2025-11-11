@@ -1,0 +1,11 @@
+# Minimal Requirements for CRM Reconciliation Pipeline
+# Install with: pip install -r requirements-minimal.txt
+
+# Core Dependencies (REQUIRED)
+psycopg2-binary>=2.9.9      # PostgreSQL connection for HubSpot data
+pandas>=2.1.0               # Data processing and CSV handling
+loguru>=0.7.2               # Logging
+requests>=2.31.0            # Workflow API client
+
+# Legacy CRM Connection (Required if using Bronze CSV from SQL Server)
+pyodbc>=5.0.1               # SQL Server connection for legacy CRM
