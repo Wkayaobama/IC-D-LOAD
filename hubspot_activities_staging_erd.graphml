@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <!-- Graph Attributes -->
+  <key id="d_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="d_type" for="node" attr.name="type" attr.type="string"/>
+  <key id="d_description" for="node" attr.name="description" attr.type="string"/>
+  <key id="d_color" for="node" attr.name="color" attr.type="string"/>
+  <key id="d_shape" for="node" attr.name="shape" attr.type="string"/>
+  <key id="d_properties" for="node" attr.name="properties" attr.type="string"/>
+
+  <key id="e_label" for="edge" attr.name="label" attr.type="string"/>
+  <key id="e_type" for="edge" attr.name="type" attr.type="string"/>
+  <key id="e_cardinality" for="edge" attr.name="cardinality" attr.type="string"/>
+  <key id="e_color" for="edge" attr.name="color" attr.type="string"/>
+
+  <graph id="HubSpot_Activities_Staging_ERD" edgedefault="directed">
+
+    <!-- ========================================== -->
+    <!-- SOURCE LAYER: Legacy CRM Data -->
+    <!-- ========================================== -->
+
+    <node id="source_communications">
+      <data key="d_label">Communications Master\n(Source CSV)</data>
+      <data key="d_type">source</data>
+      <data key="d_color">#FFE6E6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Denormalized communications table from legacy CRM with 22 columns</data>
+      <data key="d_properties">Comm_CommunicationId (PK)
+Comm_OpportunityId (FK)
+Comm_CaseId
+Comm_Type
+Comm_Action
+Comm_Status
+Comm_Priority
+Comm_DateTime
+Comm_ToDateTime
+Comm_Note
+Comm_Subject
+Comm_Email_Clean
+Comm_CreatedDate
+Comm_UpdatedDate
+Comm_OriginalDateTime
+Comm_OriginalToDateTime
+Person_Id (FK)
+Person_FirstName
+Person_LastName
+Person_EmailAddress
+Company_Id (FK)
+Company_Name</data>
+    </node>
+
+    <!-- ========================================== -->
+    <!-- MASTER STAGING LAYER -->
+    <!-- ========================================== -->
+
+    <node id="staging_ic_communication_master">
+      <data key="d_label">staging.ic_communication_master\n(MASTER TABLE - Load First)</data>
+      <data key="d_type">master_staging</data>
+      <data key="d_color">#E6F3FF</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Master staging table preserving all source data with classification and FK resolution</data>
+      <data key="d_properties">id (PK)
+comm_communicationid (UNIQUE)
+comm_opportunityid
+comm_caseid
+comm_type
+comm_action
+comm_status
+comm_priority
+comm_datetime
+comm_todatetime
+comm_note
+comm_subject
+comm_email_clean
+comm_createddate
+comm_updateddate
+comm_originaldatetime
+comm_originaltodatetime
+person_id
+person_firstname
+person_lastname
+person_emailaddress
+company_id
+company_name
+derived_activity_type (COMPUTED)
+is_task_eligible (COMPUTED)
+hubspot_contact_id (FK)
+hubspot_company_id (FK)
+hubspot_deal_id (FK)
+staging_status
+api_push_status
+api_engagement_id
+error_message
+created_at
+processed_at
+last_updated</data>
+    </node>
+
+    <!-- ========================================== -->
+    <!-- DERIVATIVE STAGING TABLES (HubSpot Activities) -->
+    <!-- ========================================== -->
+
+    <!-- CALLS -->
+    <node id="staging_ic_calls">
+      <data key="d_label">staging.ic_calls\n(Call Activities)</data>
+      <data key="d_type">derivative_staging</data>
+      <data key="d_color">#E6FFE6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Call activity staging table conforming to HubSpot Calls schema</data>
+      <data key="d_properties">id (PK)
+ic_communication_master_id (FK UNIQUE)
+activity_date
+activity_assigned_to
+activity_created_by
+create_date
+last_modified_date
+call_title
+call_notes
+call_direction (INBOUND/OUTBOUND)
+call_duration_ms
+call_status
+call_outcome
+call_source
+from_number
+to_number
+associated_contact_id (FK)
+associated_company_id (FK)
+associated_deal_id (FK)
+hubspot_api_payload (JSONB)
+api_push_status
+hubspot_engagement_id
+error_message
+created_at
+pushed_at
+last_updated</data>
+    </node>
+
+    <!-- EMAILS -->
+    <node id="staging_ic_emails">
+      <data key="d_label">staging.ic_emails\n(Email Activities)</data>
+      <data key="d_type">derivative_staging</data>
+      <data key="d_color">#E6FFE6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Email activity staging table conforming to HubSpot Emails schema</data>
+      <data key="d_properties">id (PK)
+ic_communication_master_id (FK UNIQUE)
+activity_date
+activity_assigned_to
+activity_created_by
+create_date
+last_modified_date
+email_subject
+email_body
+email_direction (INCOMING/OUTGOING)
+email_from_address
+email_to_address
+email_send_status
+email_open_rate
+email_click_rate
+email_reply_rate
+associated_contact_id (FK)
+associated_company_id (FK)
+associated_deal_id (FK)
+hubspot_api_payload (JSONB)
+api_push_status
+hubspot_engagement_id
+error_message
+created_at
+pushed_at
+last_updated</data>
+    </node>
+
+    <!-- MEETINGS -->
+    <node id="staging_ic_meetings">
+      <data key="d_label">staging.ic_meetings\n(Meeting Activities)</data>
+      <data key="d_type">derivative_staging</data>
+      <data key="d_color">#E6FFE6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Meeting activity staging table conforming to HubSpot Meetings schema</data>
+      <data key="d_properties">id (PK)
+ic_communication_master_id (FK UNIQUE)
+activity_date
+activity_assigned_to
+activity_created_by
+create_date
+last_modified_date
+meeting_name
+meeting_description
+meeting_start_time
+meeting_end_time
+internal_meeting_notes
+meeting_location
+location_type
+meeting_outcome
+meeting_source
+outcome_completed_count
+outcome_canceled_count
+outcome_no_show_count
+outcome_rescheduled_count
+associated_contact_id (FK)
+associated_company_id (FK)
+associated_deal_id (FK)
+hubspot_api_payload (JSONB)
+api_push_status
+hubspot_engagement_id
+error_message
+created_at
+pushed_at
+last_updated</data>
+    </node>
+
+    <!-- NOTES -->
+    <node id="staging_ic_notes">
+      <data key="d_label">staging.ic_notes\n(Note Activities)</data>
+      <data key="d_type">derivative_staging</data>
+      <data key="d_color">#E6FFE6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Note activity staging table conforming to HubSpot Notes schema</data>
+      <data key="d_properties">id (PK)
+ic_communication_master_id (FK UNIQUE)
+activity_date
+activity_assigned_to
+activity_created_by
+create_date
+last_modified_date
+note_body
+associated_contact_id (FK)
+associated_company_id (FK)
+associated_deal_id (FK)
+hubspot_api_payload (JSONB)
+api_push_status
+hubspot_engagement_id
+error_message
+created_at
+pushed_at
+last_updated</data>
+    </node>
+
+    <!-- TASKS -->
+    <node id="staging_ic_tasks">
+      <data key="d_label">staging.ic_tasks\n(Task Activities)</data>
+      <data key="d_type">derivative_staging</data>
+      <data key="d_color">#E6FFE6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Task activity staging table conforming to HubSpot Tasks schema (includes Case-to-Task conversion)</data>
+      <data key="d_properties">id (PK)
+ic_communication_master_id (FK UNIQUE)
+activity_date
+activity_assigned_to
+activity_created_by
+create_date
+last_modified_date
+task_title
+task_notes
+due_date
+task_status (NOT_STARTED/COMPLETED)
+completed_at
+task_priority (LOW/MEDIUM/HIGH)
+task_type (TODO/EMAIL/CALL)
+is_overdue
+reminder_date
+source_type (task/case)
+source_case_id
+associated_contact_id (FK)
+associated_company_id (FK)
+associated_deal_id (FK)
+hubspot_api_payload (JSONB)
+api_push_status
+hubspot_engagement_id
+error_message
+created_at
+pushed_at
+last_updated</data>
+    </node>
+
+    <!-- COMMUNICATIONS (SMS/LinkedIn/WhatsApp) -->
+    <node id="staging_ic_communications">
+      <data key="d_label">staging.ic_communications\n(SMS/LinkedIn/WhatsApp)</data>
+      <data key="d_type">derivative_staging</data>
+      <data key="d_color">#E6FFE6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Communication activity staging table for messaging channels</data>
+      <data key="d_properties">id (PK)
+ic_communication_master_id (FK UNIQUE)
+activity_date
+activity_assigned_to
+activity_created_by
+create_date
+last_modified_date
+communication_body
+channel_type (SMS/LINKEDIN_MESSAGE/WHATS_APP)
+logged_from
+associated_contact_id (FK)
+associated_company_id (FK)
+associated_deal_id (FK)
+hubspot_api_payload (JSONB)
+api_push_status
+hubspot_engagement_id
+error_message
+created_at
+pushed_at
+last_updated</data>
+    </node>
+
+    <!-- POSTAL MAIL -->
+    <node id="staging_ic_postal_mail">
+      <data key="d_label">staging.ic_postal_mail\n(Postal Mail Activities)</data>
+      <data key="d_type">derivative_staging</data>
+      <data key="d_color">#E6FFE6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Postal mail activity staging table conforming to HubSpot Postal Mail schema</data>
+      <data key="d_properties">id (PK)
+ic_communication_master_id (FK UNIQUE)
+activity_date
+activity_assigned_to
+activity_created_by
+create_date
+last_modified_date
+postal_mail_body
+body_preview
+associated_contact_id (FK)
+associated_company_id (FK)
+associated_deal_id (FK)
+hubspot_api_payload (JSONB)
+api_push_status
+hubspot_engagement_id
+error_message
+created_at
+pushed_at
+last_updated</data>
+    </node>
+
+    <!-- ========================================== -->
+    <!-- REFERENCE TABLES (Existing Reconciliation) -->
+    <!-- ========================================== -->
+
+    <node id="staging_contacts_reconciliation">
+      <data key="d_label">staging.contacts_reconciliation\n(Existing)</data>
+      <data key="d_type">reference</data>
+      <data key="d_color">#FFF9E6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Existing contact reconciliation table mapping legacy contact IDs to HubSpot IDs</data>
+      <data key="d_properties">id (PK)
+legacy_contact_id (UNIQUE)
+hubspot_contact_id
+legacy_email
+hubspot_email
+legacy_firstname
+legacy_lastname
+hubspot_firstname
+hubspot_lastname
+legacy_company_id
+hubspot_company_id
+reconciliation_status
+created_at
+last_updated</data>
+    </node>
+
+    <node id="staging_companies_reconciliation">
+      <data key="d_label">staging.companies_reconciliation\n(Existing)</data>
+      <data key="d_type">reference</data>
+      <data key="d_color">#FFF9E6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Existing company reconciliation table mapping legacy company IDs to HubSpot IDs</data>
+      <data key="d_properties">id (PK)
+legacy_company_id (UNIQUE)
+hubspot_company_id
+legacy_name
+hubspot_name
+legacy_domain
+hubspot_domain
+reconciliation_status
+created_at
+last_updated</data>
+    </node>
+
+    <node id="staging_deals_reconciliation">
+      <data key="d_label">staging.deals_reconciliation\n(Existing)</data>
+      <data key="d_type">reference</data>
+      <data key="d_color">#FFF9E6</data>
+      <data key="d_shape">rectangle</data>
+      <data key="d_description">Existing deal reconciliation table mapping legacy opportunity IDs to HubSpot IDs</data>
+      <data key="d_properties">id (PK)
+legacy_deal_id (UNIQUE)
+hubspot_deal_id
+legacy_dealname
+hubspot_dealname
+legacy_amount
+hubspot_amount
+legacy_company_id
+hubspot_company_id
+legacy_contact_id
+hubspot_contact_id
+reconciliation_status
+created_at
+last_updated</data>
+    </node>
+
+    <!-- ========================================== -->
+    <!-- HUBSPOT TARGET (API Destination) -->
+    <!-- ========================================== -->
+
+    <node id="hubspot_engagements_api">
+      <data key="d_label">HubSpot Engagements API\n(POST /engagements/v1/engagements)</data>
+      <data key="d_type">api_target</data>
+      <data key="d_color">#F0E6FF</data>
+      <data key="d_shape">ellipse</data>
+      <data key="d_description">HubSpot API endpoint for creating engagement records (activities)</data>
+      <data key="d_properties">Endpoint: /engagements/v1/engagements
+Method: POST
+Auth: API Key / OAuth
+Rate Limit: 10 req/sec
+Batch Support: 100 records/request
+
+Engagement Types:
+- CALL
+- EMAIL
+- MEETING
+- NOTE
+- TASK
+- COMMUNICATION
+- POSTAL_MAIL
+
+Associations:
+- contactIds[]
+- companyIds[]
+- dealIds[]</data>
+    </node>
+
+    <!-- ========================================== -->
+    <!-- PROCESSING COMPONENTS -->
+    <!-- ========================================== -->
+
+    <node id="classification_engine">
+      <data key="d_label">Activity Type\nClassification Engine</data>
+      <data key="d_type">process</data>
+      <data key="d_color">#FFE6CC</data>
+      <data key="d_shape">diamond</data>
+      <data key="d_description">Logic for determining activity type from Comm_Type field</data>
+      <data key="d_properties">Input: Comm_Type, Comm_Priority, Comm_CaseId
+Output: derived_activity_type
+
+Rules:
+1. Explicit type mapping
+2. Case-to-Task conversion (if priority >= High)
+3. Default fallback to 'notes'
+
+Types:
+- calls
+- emails
+- meetings
+- notes
+- tasks
+- communications
+- postal_mail</data>
+    </node>
+
+    <node id="fk_resolution_engine">
+      <data key="d_label">Foreign Key\nResolution Engine</data>
+      <data key="d_type">process</data>
+      <data key="d_color">#FFE6CC</data>
+      <data key="d_shape">diamond</data>
+      <data key="d_description">Resolves legacy IDs to HubSpot IDs via reconciliation tables</data>
+      <data key="d_properties">Process:
+1. Join with contacts_reconciliation
+2. Join with companies_reconciliation
+3. Join with deals_reconciliation
+4. Update master table with HubSpot IDs
+5. Log unresolved references
+
+Output Fields:
+- hubspot_contact_id
+- hubspot_company_id
+- hubspot_deal_id</data>
+    </node>
+
+    <node id="property_mapper">
+      <data key="d_label">Property Mapping\nTransformation Engine</data>
+      <data key="d_type">process</data>
+      <data key="d_color">#FFE6CC</data>
+      <data key="d_shape">diamond</data>
+      <data key="d_description">Transforms master table fields to activity-specific properties</data>
+      <data key="d_properties">Transformations:
+- Field renaming
+- Value mapping (enums)
+- Calculated fields (duration_ms)
+- Concatenation (note_body)
+- Date formatting
+- Email extraction logic
+- Phone number parsing</data>
+    </node>
+
+    <node id="api_payload_builder">
+      <data key="d_label">API Payload Builder\n(Jinja Templates)</data>
+      <data key="d_type">process</data>
+      <data key="d_color">#FFE6CC</data>
+      <data key="d_shape">diamond</data>
+      <data key="d_description">Builds JSON payloads for HubSpot API using Jinja templates</data>
+      <data key="d_properties">Templates:
+- hubspot_call_payload.j2
+- hubspot_email_payload.j2
+- hubspot_meeting_payload.j2
+- hubspot_note_payload.j2
+- hubspot_task_payload.j2
+- hubspot_communication_payload.j2
+- hubspot_postal_mail_payload.j2
+
+Output: hubspot_api_payload (JSONB)</data>
+    </node>
+
+    <!-- ========================================== -->
+    <!-- EDGES (Relationships & Data Flow) -->
+    <!-- ========================================== -->
+
+    <!-- Source to Master -->
+    <edge id="e1" source="source_communications" target="staging_ic_communication_master">
+      <data key="e_label">LOAD (CSV → PostgreSQL)</data>
+      <data key="e_type">data_flow</data>
+      <data key="e_cardinality">1:1</data>
+      <data key="e_color">#0066CC</data>
+    </edge>
+
+    <!-- Classification Engine -->
+    <edge id="e2" source="staging_ic_communication_master" target="classification_engine">
+      <data key="e_label">Classify Activity Type</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#FF9900</data>
+    </edge>
+
+    <edge id="e3" source="classification_engine" target="staging_ic_communication_master">
+      <data key="e_label">Set derived_activity_type</data>
+      <data key="e_type">data_update</data>
+      <data key="e_color">#FF9900</data>
+    </edge>
+
+    <!-- FK Resolution -->
+    <edge id="e4" source="staging_ic_communication_master" target="fk_resolution_engine">
+      <data key="e_label">Resolve FKs</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#FF9900</data>
+    </edge>
+
+    <edge id="e5" source="staging_contacts_reconciliation" target="fk_resolution_engine">
+      <data key="e_label">Contact Lookup</data>
+      <data key="e_type">lookup</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#666666</data>
+    </edge>
+
+    <edge id="e6" source="staging_companies_reconciliation" target="fk_resolution_engine">
+      <data key="e_label">Company Lookup</data>
+      <data key="e_type">lookup</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#666666</data>
+    </edge>
+
+    <edge id="e7" source="staging_deals_reconciliation" target="fk_resolution_engine">
+      <data key="e_label">Deal Lookup</data>
+      <data key="e_type">lookup</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#666666</data>
+    </edge>
+
+    <edge id="e8" source="fk_resolution_engine" target="staging_ic_communication_master">
+      <data key="e_label">Update HubSpot IDs</data>
+      <data key="e_type">data_update</data>
+      <data key="e_color">#FF9900</data>
+    </edge>
+
+    <!-- Master to Derivatives (via Property Mapper) -->
+    <edge id="e9" source="staging_ic_communication_master" target="property_mapper">
+      <data key="e_label">Transform Properties</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#FF9900</data>
+    </edge>
+
+    <!-- Property Mapper to Derivatives -->
+    <edge id="e10" source="property_mapper" target="staging_ic_calls">
+      <data key="e_label">WHERE derived_activity_type = 'calls'</data>
+      <data key="e_type">data_flow</data>
+      <data key="e_cardinality">1:1</data>
+      <data key="e_color">#00CC66</data>
+    </edge>
+
+    <edge id="e11" source="property_mapper" target="staging_ic_emails">
+      <data key="e_label">WHERE derived_activity_type = 'emails'</data>
+      <data key="e_type">data_flow</data>
+      <data key="e_cardinality">1:1</data>
+      <data key="e_color">#00CC66</data>
+    </edge>
+
+    <edge id="e12" source="property_mapper" target="staging_ic_meetings">
+      <data key="e_label">WHERE derived_activity_type = 'meetings'</data>
+      <data key="e_type">data_flow</data>
+      <data key="e_cardinality">1:1</data>
+      <data key="e_color">#00CC66</data>
+    </edge>
+
+    <edge id="e13" source="property_mapper" target="staging_ic_notes">
+      <data key="e_label">WHERE derived_activity_type = 'notes'</data>
+      <data key="e_type">data_flow</data>
+      <data key="e_cardinality">1:1</data>
+      <data key="e_color">#00CC66</data>
+    </edge>
+
+    <edge id="e14" source="property_mapper" target="staging_ic_tasks">
+      <data key="e_label">WHERE derived_activity_type = 'tasks'</data>
+      <data key="e_type">data_flow</data>
+      <data key="e_cardinality">1:1</data>
+      <data key="e_color">#00CC66</data>
+    </edge>
+
+    <edge id="e15" source="property_mapper" target="staging_ic_communications">
+      <data key="e_label">WHERE derived_activity_type = 'communications'</data>
+      <data key="e_type">data_flow</data>
+      <data key="e_cardinality">1:1</data>
+      <data key="e_color">#00CC66</data>
+    </edge>
+
+    <edge id="e16" source="property_mapper" target="staging_ic_postal_mail">
+      <data key="e_label">WHERE derived_activity_type = 'postal_mail'</data>
+      <data key="e_type">data_flow</data>
+      <data key="e_cardinality">1:1</data>
+      <data key="e_color">#00CC66</data>
+    </edge>
+
+    <!-- Derivatives to API Payload Builder -->
+    <edge id="e17" source="staging_ic_calls" target="api_payload_builder">
+      <data key="e_label">Build Call Payload</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#CC00CC</data>
+    </edge>
+
+    <edge id="e18" source="staging_ic_emails" target="api_payload_builder">
+      <data key="e_label">Build Email Payload</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#CC00CC</data>
+    </edge>
+
+    <edge id="e19" source="staging_ic_meetings" target="api_payload_builder">
+      <data key="e_label">Build Meeting Payload</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#CC00CC</data>
+    </edge>
+
+    <edge id="e20" source="staging_ic_notes" target="api_payload_builder">
+      <data key="e_label">Build Note Payload</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#CC00CC</data>
+    </edge>
+
+    <edge id="e21" source="staging_ic_tasks" target="api_payload_builder">
+      <data key="e_label">Build Task Payload</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#CC00CC</data>
+    </edge>
+
+    <edge id="e22" source="staging_ic_communications" target="api_payload_builder">
+      <data key="e_label">Build Communication Payload</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#CC00CC</data>
+    </edge>
+
+    <edge id="e23" source="staging_ic_postal_mail" target="api_payload_builder">
+      <data key="e_label">Build Postal Mail Payload</data>
+      <data key="e_type">process_flow</data>
+      <data key="e_color">#CC00CC</data>
+    </edge>
+
+    <!-- API Payload Builder to HubSpot -->
+    <edge id="e24" source="api_payload_builder" target="hubspot_engagements_api">
+      <data key="e_label">POST Engagements (Future Phase)</data>
+      <data key="e_type">api_call</data>
+      <data key="e_color">#9900CC</data>
+    </edge>
+
+    <!-- HubSpot API back to Derivatives (Update engagement IDs) -->
+    <edge id="e25" source="hubspot_engagements_api" target="staging_ic_calls">
+      <data key="e_label">Update hubspot_engagement_id</data>
+      <data key="e_type">api_response</data>
+      <data key="e_color">#9900CC</data>
+    </edge>
+
+    <edge id="e26" source="hubspot_engagements_api" target="staging_ic_emails">
+      <data key="e_label">Update hubspot_engagement_id</data>
+      <data key="e_type">api_response</data>
+      <data key="e_color">#9900CC</data>
+    </edge>
+
+    <edge id="e27" source="hubspot_engagements_api" target="staging_ic_meetings">
+      <data key="e_label">Update hubspot_engagement_id</data>
+      <data key="e_type">api_response</data>
+      <data key="e_color">#9900CC</data>
+    </edge>
+
+    <edge id="e28" source="hubspot_engagements_api" target="staging_ic_notes">
+      <data key="e_label">Update hubspot_engagement_id</data>
+      <data key="e_type">api_response</data>
+      <data key="e_color">#9900CC</data>
+    </edge>
+
+    <edge id="e29" source="hubspot_engagements_api" target="staging_ic_tasks">
+      <data key="e_label">Update hubspot_engagement_id</data>
+      <data key="e_type">api_response</data>
+      <data key="e_color">#9900CC</data>
+    </edge>
+
+    <edge id="e30" source="hubspot_engagements_api" target="staging_ic_communications">
+      <data key="e_label">Update hubspot_engagement_id</data>
+      <data key="e_type">api_response</data>
+      <data key="e_color">#9900CC</data>
+    </edge>
+
+    <edge id="e31" source="hubspot_engagements_api" target="staging_ic_postal_mail">
+      <data key="e_label">Update hubspot_engagement_id</data>
+      <data key="e_type">api_response</data>
+      <data key="e_color">#9900CC</data>
+    </edge>
+
+    <!-- Master table FK references to derivatives (CASCADE DELETE) -->
+    <edge id="e32" source="staging_ic_calls" target="staging_ic_communication_master">
+      <data key="e_label">FK: ic_communication_master_id</data>
+      <data key="e_type">foreign_key</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#CC0000</data>
+    </edge>
+
+    <edge id="e33" source="staging_ic_emails" target="staging_ic_communication_master">
+      <data key="e_label">FK: ic_communication_master_id</data>
+      <data key="e_type">foreign_key</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#CC0000</data>
+    </edge>
+
+    <edge id="e34" source="staging_ic_meetings" target="staging_ic_communication_master">
+      <data key="e_label">FK: ic_communication_master_id</data>
+      <data key="e_type">foreign_key</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#CC0000</data>
+    </edge>
+
+    <edge id="e35" source="staging_ic_notes" target="staging_ic_communication_master">
+      <data key="e_label">FK: ic_communication_master_id</data>
+      <data key="e_type">foreign_key</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#CC0000</data>
+    </edge>
+
+    <edge id="e36" source="staging_ic_tasks" target="staging_ic_communication_master">
+      <data key="e_label">FK: ic_communication_master_id</data>
+      <data key="e_type">foreign_key</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#CC0000</data>
+    </edge>
+
+    <edge id="e37" source="staging_ic_communications" target="staging_ic_communication_master">
+      <data key="e_label">FK: ic_communication_master_id</data>
+      <data key="e_type">foreign_key</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#CC0000</data>
+    </edge>
+
+    <edge id="e38" source="staging_ic_postal_mail" target="staging_ic_communication_master">
+      <data key="e_label">FK: ic_communication_master_id</data>
+      <data key="e_type">foreign_key</data>
+      <data key="e_cardinality">N:1</data>
+      <data key="e_color">#CC0000</data>
+    </edge>
+
+  </graph>
+</graphml>
