@@ -179,38 +179,10 @@ CASE_CONFIG = EntityConfig(
     where_clause=None
 )
 
-# Company Entity Configuration - Using actual available columns
-COMPANY_SIMPLE_PROPERTIES = {
-    'base': [
-        'Comp_CompanyId',
-        'Comp_PrimaryPersonId',
-        'Comp_PrimaryAddressId',
-        'Comp_Name',
-        'Comp_Type',
-        'Comp_Status',
-        'Comp_Source',
-        'Comp_Territory',
-        'Comp_Revenue',
-        'Comp_Employees',
-        'Comp_Sector',
-        'Comp_WebSite',
-        'Comp_CreatedDate',
-        'Comp_UpdatedDate'
-    ],
-    'denormalized': [
-        'a.[Addr_AddressId] AS Address_Id',
-        'a.[Addr_Address1] AS Address_Street1',
-        'a.[Addr_City] AS Address_City',
-        'a.[Addr_State] AS Address_State',
-        'a.[Addr_Country] AS Address_Country',
-        'a.[Addr_PostCode] AS Address_PostCode'
-    ],
-    'metadata': []
-}
-
+# Company Entity Configuration - Using full properties with phone numbers
 COMPANY_CONFIG = EntityConfig(
     name="Company",
-    properties=COMPANY_SIMPLE_PROPERTIES,
+    properties=COMPANY_PROPERTIES,
     base_table="Company",
     joins=[
         "LEFT JOIN [CRMICALPS].[dbo].[Address] a ON base.[Comp_PrimaryAddressId] = a.[Addr_AddressId]"
@@ -218,40 +190,10 @@ COMPANY_CONFIG = EntityConfig(
     where_clause="base.[Comp_CompanyId] IS NOT NULL"
 )
 
-# Person Entity Configuration - Using actual available columns
-PERSON_SIMPLE_PROPERTIES = {
-    'base': [
-        'Pers_PersonId',
-        'Pers_CompanyId',
-        'Pers_PrimaryAddressId',
-        'Pers_Salutation',
-        'Pers_FirstName',
-        'Pers_LastName',
-        'Pers_MiddleName',
-        'Pers_Gender',
-        'Pers_Title',
-        'Pers_Department',
-        'Pers_Status',
-        'Pers_Source',
-        'Pers_Territory',
-        'Pers_WebSite',
-        'Pers_CreatedDate',
-        'Pers_UpdatedDate'
-    ],
-    'denormalized': [
-        'c.[Comp_Name] AS Company_Name',
-        'c.[Comp_WebSite] AS Company_WebSite',
-        'a.[Addr_AddressId] AS Address_Id',
-        'a.[Addr_Address1] AS Address_Street1',
-        'a.[Addr_City] AS Address_City',
-        'a.[Addr_Country] AS Address_Country'
-    ],
-    'metadata': []
-}
-
+# Person Entity Configuration - Using full properties with phone numbers
 PERSON_CONFIG = EntityConfig(
     name="Person",
-    properties=PERSON_SIMPLE_PROPERTIES,
+    properties=PERSON_PROPERTIES,
     base_table="Person",
     joins=[
         "LEFT JOIN [CRMICALPS].[dbo].[Company] c ON base.[Pers_CompanyId] = c.[Comp_CompanyId]",
