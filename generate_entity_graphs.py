@@ -229,6 +229,21 @@ def main():
             json.dump(graph_data, f, indent=2)
         print("  ✓ JSON export: entity_relationship_graph.json")
 
+        # Create styled GraphML version
+        print("\n🎨 Creating styled GraphML with contrasting labels...")
+        import subprocess
+        result = subprocess.run(
+            ['python3', 'enhance_graphml_styling.py',
+             'entity_relationship_graph.graphml',
+             'entity_relationship_graph_styled.graphml'],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode == 0:
+            print("  ✓ Styled GraphML: entity_relationship_graph_styled.graphml")
+        else:
+            print("  ⚠ Warning: Could not create styled GraphML")
+
     # Summary
     print("\n" + "=" * 80)
     print("✨ GENERATION COMPLETE!")
@@ -248,6 +263,7 @@ def main():
             print("    • entity_relationship_graph_interactive.html")
         print("  Data Exports:")
         print("    • entity_relationship_graph.graphml")
+        print("    • entity_relationship_graph_styled.graphml (with contrasting labels)")
         print("    • entity_relationship_graph.json")
 
     print("\n💡 Tips:")
