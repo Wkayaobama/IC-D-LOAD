@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d7" for="edge" attr.name="description" attr.type="string" />
+  <key id="d6" for="edge" attr.name="foreign_key" attr.type="string" />
+  <key id="d5" for="edge" attr.name="relationship_type" attr.type="string" />
+  <key id="d4" for="edge" attr.name="cardinality" attr.type="string" />
+  <key id="d3" for="node" attr.name="primary_key" attr.type="string" />
+  <key id="d2" for="node" attr.name="table_name" attr.type="string" />
+  <key id="d1" for="node" attr.name="entity_type" attr.type="string" />
+  <key id="d0" for="node" attr.name="label" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="legacy_Company">
+      <data key="d0">Company</data>
+      <data key="d1">legacy</data>
+      <data key="d2">Company</data>
+      <data key="d3">Comp_CompanyId</data>
+    </node>
+    <node id="legacy_Person">
+      <data key="d0">Person</data>
+      <data key="d1">legacy</data>
+      <data key="d2">Person</data>
+      <data key="d3">Pers_PersonId</data>
+    </node>
+    <node id="legacy_Address">
+      <data key="d0">Address</data>
+      <data key="d1">legacy</data>
+      <data key="d2">Address</data>
+      <data key="d3">Addr_AddressId</data>
+    </node>
+    <node id="legacy_Case">
+      <data key="d0">Case</data>
+      <data key="d1">legacy</data>
+      <data key="d2">vCases</data>
+      <data key="d3">Case_CaseId</data>
+    </node>
+    <node id="legacy_Communication">
+      <data key="d0">Communication</data>
+      <data key="d1">legacy</data>
+      <data key="d2">vCalendarCommunication</data>
+      <data key="d3">Comm_CommunicationId</data>
+    </node>
+    <node id="legacy_Opportunity">
+      <data key="d0">Opportunity</data>
+      <data key="d1">legacy</data>
+      <data key="d2">Opportunity</data>
+      <data key="d3">Oppo_OpportunityId</data>
+    </node>
+    <node id="legacy_SocialNetwork">
+      <data key="d0">SocialNetwork</data>
+      <data key="d1">legacy</data>
+      <data key="d2">SocialNetwork</data>
+      <data key="d3">SoN_SocialNetworkId</data>
+    </node>
+    <node id="hubspot_contacts">
+      <data key="d0">contacts</data>
+      <data key="d1">hubspot</data>
+      <data key="d2">hubspot.contacts</data>
+      <data key="d3">hs_object_id</data>
+    </node>
+    <node id="hubspot_companies">
+      <data key="d0">companies</data>
+      <data key="d1">hubspot</data>
+      <data key="d2">hubspot.companies</data>
+      <data key="d3">hs_object_id</data>
+    </node>
+    <node id="hubspot_deals">
+      <data key="d0">deals</data>
+      <data key="d1">hubspot</data>
+      <data key="d2">hubspot.deals</data>
+      <data key="d3">hs_object_id</data>
+    </node>
+    <node id="hubspot_engagements">
+      <data key="d0">engagements</data>
+      <data key="d1">hubspot</data>
+      <data key="d2">hubspot.engagements</data>
+      <data key="d3">hs_object_id</data>
+    </node>
+    <edge source="legacy_Company" target="legacy_Address">
+      <data key="d4">1:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">Comp_PrimaryAddressId</data>
+      <data key="d7">Company primary address</data>
+    </edge>
+    <edge source="legacy_Company" target="hubspot_companies">
+      <data key="d4">1:1</data>
+      <data key="d5">mapping</data>
+      <data key="d6">icalps_company_id</data>
+      <data key="d7">Company mapped to company</data>
+    </edge>
+    <edge source="legacy_Person" target="legacy_Company">
+      <data key="d4">N:1</data>
+      <data key="d5">association</data>
+      <data key="d6">Pers_CompanyId</data>
+      <data key="d7">Person works at company</data>
+    </edge>
+    <edge source="legacy_Person" target="legacy_Address">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">Pers_PrimaryAddressId</data>
+      <data key="d7">Person primary address</data>
+    </edge>
+    <edge source="legacy_Person" target="hubspot_contacts">
+      <data key="d4">1:1</data>
+      <data key="d5">mapping</data>
+      <data key="d6">icalps_contact_id</data>
+      <data key="d7">Person mapped to contact</data>
+    </edge>
+    <edge source="legacy_Case" target="legacy_Company">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">Case_PrimaryCompanyId</data>
+      <data key="d7">Case primary company</data>
+    </edge>
+    <edge source="legacy_Case" target="legacy_Person">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">Case_PrimaryPersonId</data>
+      <data key="d7">Case primary contact</data>
+    </edge>
+    <edge source="legacy_Case" target="hubspot_deals">
+      <data key="d4">1:1</data>
+      <data key="d5">mapping</data>
+      <data key="d6">icalps_deal_id</data>
+      <data key="d7">Case mapped to deal</data>
+    </edge>
+    <edge source="legacy_Communication" target="legacy_Case">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">Comm_CaseId</data>
+      <data key="d7">Communication about case</data>
+    </edge>
+    <edge source="legacy_Communication" target="hubspot_engagements">
+      <data key="d4">1:1</data>
+      <data key="d5">mapping</data>
+      <data key="d6">icalps_communication_id</data>
+      <data key="d7">Communication mapped to engagement</data>
+    </edge>
+    <edge source="legacy_Opportunity" target="legacy_Company">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">Oppo_PrimaryCompanyId</data>
+      <data key="d7">Opportunity for company</data>
+    </edge>
+    <edge source="legacy_Opportunity" target="legacy_Person">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">Oppo_PrimaryPersonId</data>
+      <data key="d7">Opportunity contact person</data>
+    </edge>
+    <edge source="legacy_Opportunity" target="hubspot_deals">
+      <data key="d4">1:1</data>
+      <data key="d5">mapping</data>
+      <data key="d6">icalps_deal_id</data>
+      <data key="d7">Opportunity mapped to deal</data>
+    </edge>
+    <edge source="legacy_SocialNetwork" target="legacy_Person">
+      <data key="d4">N:1</data>
+      <data key="d5">association</data>
+      <data key="d6">SoN_PersonId</data>
+      <data key="d7">Social network profile</data>
+    </edge>
+    <edge source="hubspot_contacts" target="hubspot_companies">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">associatedcompanyid</data>
+      <data key="d7">Contact works at company</data>
+    </edge>
+    <edge source="hubspot_deals" target="hubspot_companies">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">associatedcompanyid</data>
+      <data key="d7">Deal with company</data>
+    </edge>
+    <edge source="hubspot_engagements" target="hubspot_companies">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">associated_company_id</data>
+      <data key="d7">Engagement with company</data>
+    </edge>
+    <edge source="hubspot_engagements" target="hubspot_contacts">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">associated_contact_id</data>
+      <data key="d7">Engagement with contact</data>
+    </edge>
+    <edge source="hubspot_engagements" target="hubspot_deals">
+      <data key="d4">N:0..1</data>
+      <data key="d5">association</data>
+      <data key="d6">associated_deal_id</data>
+      <data key="d7">Engagement about deal</data>
+    </edge>
+  </graph>
+</graphml>

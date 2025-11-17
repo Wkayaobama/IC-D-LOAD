@@ -1,0 +1,14 @@
+# Entity Relationship Graph Requirements
+# =========================================
+
+# Core dependencies
+networkx>=3.0
+matplotlib>=3.5.0
+numpy>=1.21.0
+
+# Optional for enhanced visualizations
+plotly>=5.0.0
+pyvis>=0.3.0
+
+# For 3D visualizations
+scipy>=1.7.0

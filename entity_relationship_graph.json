@@ -1,0 +1,238 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "Company",
+      "entity_type": "legacy",
+      "table_name": "Company",
+      "primary_key": "Comp_CompanyId",
+      "id": "legacy_Company"
+    },
+    {
+      "label": "Person",
+      "entity_type": "legacy",
+      "table_name": "Person",
+      "primary_key": "Pers_PersonId",
+      "id": "legacy_Person"
+    },
+    {
+      "label": "Address",
+      "entity_type": "legacy",
+      "table_name": "Address",
+      "primary_key": "Addr_AddressId",
+      "id": "legacy_Address"
+    },
+    {
+      "label": "Case",
+      "entity_type": "legacy",
+      "table_name": "vCases",
+      "primary_key": "Case_CaseId",
+      "id": "legacy_Case"
+    },
+    {
+      "label": "Communication",
+      "entity_type": "legacy",
+      "table_name": "vCalendarCommunication",
+      "primary_key": "Comm_CommunicationId",
+      "id": "legacy_Communication"
+    },
+    {
+      "label": "Opportunity",
+      "entity_type": "legacy",
+      "table_name": "Opportunity",
+      "primary_key": "Oppo_OpportunityId",
+      "id": "legacy_Opportunity"
+    },
+    {
+      "label": "SocialNetwork",
+      "entity_type": "legacy",
+      "table_name": "SocialNetwork",
+      "primary_key": "SoN_SocialNetworkId",
+      "id": "legacy_SocialNetwork"
+    },
+    {
+      "label": "contacts",
+      "entity_type": "hubspot",
+      "table_name": "hubspot.contacts",
+      "primary_key": "hs_object_id",
+      "id": "hubspot_contacts"
+    },
+    {
+      "label": "companies",
+      "entity_type": "hubspot",
+      "table_name": "hubspot.companies",
+      "primary_key": "hs_object_id",
+      "id": "hubspot_companies"
+    },
+    {
+      "label": "deals",
+      "entity_type": "hubspot",
+      "table_name": "hubspot.deals",
+      "primary_key": "hs_object_id",
+      "id": "hubspot_deals"
+    },
+    {
+      "label": "engagements",
+      "entity_type": "hubspot",
+      "table_name": "hubspot.engagements",
+      "primary_key": "hs_object_id",
+      "id": "hubspot_engagements"
+    }
+  ],
+  "links": [
+    {
+      "cardinality": "1:0..1",
+      "relationship_type": "association",
+      "foreign_key": "Comp_PrimaryAddressId",
+      "description": "Company primary address",
+      "source": "legacy_Company",
+      "target": "legacy_Address"
+    },
+    {
+      "cardinality": "1:1",
+      "relationship_type": "mapping",
+      "foreign_key": "icalps_company_id",
+      "description": "Company mapped to company",
+      "source": "legacy_Company",
+      "target": "hubspot_companies"
+    },
+    {
+      "cardinality": "N:1",
+      "relationship_type": "association",
+      "foreign_key": "Pers_CompanyId",
+      "description": "Person works at company",
+      "source": "legacy_Person",
+      "target": "legacy_Company"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "Pers_PrimaryAddressId",
+      "description": "Person primary address",
+      "source": "legacy_Person",
+      "target": "legacy_Address"
+    },
+    {
+      "cardinality": "1:1",
+      "relationship_type": "mapping",
+      "foreign_key": "icalps_contact_id",
+      "description": "Person mapped to contact",
+      "source": "legacy_Person",
+      "target": "hubspot_contacts"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "Case_PrimaryCompanyId",
+      "description": "Case primary company",
+      "source": "legacy_Case",
+      "target": "legacy_Company"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "Case_PrimaryPersonId",
+      "description": "Case primary contact",
+      "source": "legacy_Case",
+      "target": "legacy_Person"
+    },
+    {
+      "cardinality": "1:1",
+      "relationship_type": "mapping",
+      "foreign_key": "icalps_deal_id",
+      "description": "Case mapped to deal",
+      "source": "legacy_Case",
+      "target": "hubspot_deals"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "Comm_CaseId",
+      "description": "Communication about case",
+      "source": "legacy_Communication",
+      "target": "legacy_Case"
+    },
+    {
+      "cardinality": "1:1",
+      "relationship_type": "mapping",
+      "foreign_key": "icalps_communication_id",
+      "description": "Communication mapped to engagement",
+      "source": "legacy_Communication",
+      "target": "hubspot_engagements"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "Oppo_PrimaryCompanyId",
+      "description": "Opportunity for company",
+      "source": "legacy_Opportunity",
+      "target": "legacy_Company"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "Oppo_PrimaryPersonId",
+      "description": "Opportunity contact person",
+      "source": "legacy_Opportunity",
+      "target": "legacy_Person"
+    },
+    {
+      "cardinality": "1:1",
+      "relationship_type": "mapping",
+      "foreign_key": "icalps_deal_id",
+      "description": "Opportunity mapped to deal",
+      "source": "legacy_Opportunity",
+      "target": "hubspot_deals"
+    },
+    {
+      "cardinality": "N:1",
+      "relationship_type": "association",
+      "foreign_key": "SoN_PersonId",
+      "description": "Social network profile",
+      "source": "legacy_SocialNetwork",
+      "target": "legacy_Person"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "associatedcompanyid",
+      "description": "Contact works at company",
+      "source": "hubspot_contacts",
+      "target": "hubspot_companies"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "associatedcompanyid",
+      "description": "Deal with company",
+      "source": "hubspot_deals",
+      "target": "hubspot_companies"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "associated_company_id",
+      "description": "Engagement with company",
+      "source": "hubspot_engagements",
+      "target": "hubspot_companies"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "associated_contact_id",
+      "description": "Engagement with contact",
+      "source": "hubspot_engagements",
+      "target": "hubspot_contacts"
+    },
+    {
+      "cardinality": "N:0..1",
+      "relationship_type": "association",
+      "foreign_key": "associated_deal_id",
+      "description": "Engagement about deal",
+      "source": "hubspot_engagements",
+      "target": "hubspot_deals"
+    }
+  ]
+}
