@@ -6,6 +6,7 @@
 # ============================================================================
 psycopg2-binary>=2.9.9      # PostgreSQL adapter for Python
 pyodbc>=5.0.1               # SQL Server ODBC driver (legacy CRM)
+paramiko>=3.3.0             # SSH connection and SFTP for remote PostgreSQL
 
 # ============================================================================
 # Data Processing
