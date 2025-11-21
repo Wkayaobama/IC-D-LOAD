@@ -61,6 +61,7 @@ from pipeline_config import (
 )
 from delta_loader import DeltaLoader, DeltaResult
 from communication_aggregator import CommunicationAggregator
+from opportunity_aggregator import OpportunityAggregator
 from csv_utf8_cleaner import UTF8Cleaner, CSVSchemaDiscovery
 from postgres_connection_manager import PostgreSQLManager
 
@@ -266,10 +267,20 @@ class AggregationStage(PipelineStage):
             context['aggregated_df'] = result_df
 
         elif config.entity_type == EntityType.DEALS:
-            logger.info("Applying deal aggregations")
-            # TODO: Implement deal aggregation logic
-            # Similar to communications but for company lists
-            pass
+            logger.info("Applying deal/opportunity aggregations")
+            aggregator = OpportunityAggregator(self.pg)
+
+            # Use SQL-based aggregation (faster for large datasets)
+            aggregator.process_opportunities(
+                staging_table=config.staging_table,
+                contacts_table='contacts_staging',  # Assumes contacts already loaded
+                companies_table='companies_staging',  # Assumes companies already loaded
+                output_table=f"{config.staging_table}_aggregated",
+                schema=config.schema,
+                use_sql=True  # Leverages PostgreSQL array functions
+            )
+
+            logger.info("Deal aggregations complete")
 
         else:
             logger.info(f"No specific aggregation logic for {config.entity_type.value}")
